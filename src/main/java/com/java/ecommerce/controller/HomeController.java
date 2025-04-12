@@ -11,7 +11,7 @@ public class HomeController {
 	@GetMapping("/")
 	public ApiResponse HomeControllerHandler() {
 		ApiResponse apiResponse=new ApiResponse();
-		apiResponse.setMessage("Welcome to Ecommerce!");
+		apiResponse.setMessage("Welcome to Ecommerce Project!");
 		return apiResponse;
 	}
 
