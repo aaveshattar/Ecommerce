@@ -25,5 +25,5 @@ public class User {
 	
 	private Enum role;
 	
-	private String enum;
+	private String roles;
 }
