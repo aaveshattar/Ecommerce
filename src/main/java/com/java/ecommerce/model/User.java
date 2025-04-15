@@ -24,4 +24,6 @@ public class User {
 	private String mobile;
 	
 	private Enum role;
+	
+	private String enum;
 }
