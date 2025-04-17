@@ -1,13 +1,9 @@
 package com.java.ecommerce.model;
 
-
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,22 +16,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Category {
+public class Order {
 
 	@jakarta.persistence.Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
-	
-	private String name;
-	
-	@NotNull
-	@Column(unique = true)
-	private String categoryId;
+
+	private String orderId;
 	
 	@ManyToOne
-	private Category parentCategory;
+	private User user;
 	
-	@NotNull
-	private Integer level;
 	
+
+
 }
