@@ -22,7 +22,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Product {
 
 	@jakarta.persistence.Id
@@ -52,7 +51,7 @@ public class Product {
 	private Category category;
 	
 	@ManyToOne
-	private Seller Seller;
+	private Seller seller;
 	
 	
 	private LocalDateTime createdAt;

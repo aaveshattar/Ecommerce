@@ -1,11 +1,10 @@
 package com.java.ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.java.ecommerce.domain.HomeCategorySection;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,30 +17,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class CartItem {
-	
+public class HomeCategory {
+
+
 	@jakarta.persistence.Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
-
-	@ManyToOne
-	@JsonIgnore
-	private Cart cart;
 	
-	@ManyToOne
-    private Product product;
-	
-	private String size;
-	
-	private int quantity = 1;
-	
-	private Integer mrpPrice;
-	
-	private Integer sellingPrice;
-	
-	private Long userId;
-	
-	
-	
+	private String name;
+	private String image;
+	private String categoryId;
+	private HomeCategorySection section;
 	
 }
