@@ -1,5 +1,10 @@
 package com.java.ecommerce.service;
 
-public class AuthService {
+import com.java.ecommerce.response.SignupRequest;
+
+public interface AuthService {
+	
+	
+	String createUser(SignupRequest req);
 
 }
