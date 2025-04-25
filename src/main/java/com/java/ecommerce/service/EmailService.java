@@ -1,6 +1,7 @@
 package com.java.ecommerce.service;
 
 import org.springframework.mail.MailException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class EmailService {
 		try {
 			
 		}catch(MailException e) {
-			
+			throw new MailSendException("failed to send email");
 		}
 	}
 }
