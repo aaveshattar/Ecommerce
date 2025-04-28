@@ -15,10 +15,14 @@ import com.java.ecommerce.config.JwtProvider;
 import com.java.ecommerce.domain.USER_ROLE;
 import com.java.ecommerce.model.Cart;
 import com.java.ecommerce.model.User;
+import com.java.ecommerce.model.VerificationCode;
 import com.java.ecommerce.repository.CartRepository;
 import com.java.ecommerce.repository.UserRepository;
+import com.java.ecommerce.repository.VerificationCodeRepository;
 import com.java.ecommerce.response.SignupRequest;
 import com.java.ecommerce.service.AuthService;
+import com.java.ecommerce.service.EmailService;
+import com.java.ecommerce.utils.OtpUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,8 +34,17 @@ public class AuthServiceImpl implements AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final CartRepository cartRepository;
 	private final JwtProvider jwtProvider;
+	private final VerificationCodeRepository verificationCodeRepository;
+	private final EmailService emailService;
 	@Override
-	public String createUser(SignupRequest req) {
+	public String createUser(SignupRequest req) throws Exception {
+		
+		VerificationCode verificationCode =verificationCodeRepository.findByEmail(req.getEmail());
+		
+		if(verificationCode==null || !verificationCode.getOtp().equals(req.getOtp())) {
+			throw new Exception("wrong otp...");
+		}
+		
 		
 		User user =userRepository.findByEmail(req.getEmail());
 		
@@ -58,6 +71,40 @@ public class AuthServiceImpl implements AuthService {
 		
 		
 		return jwtProvider.generateToken(authentication);
+	}
+	@Override
+	public void sentLoginOtp(String email) throws Exception {
+
+		String SIGNING_PREFIX="signin_";
+		
+		if (email.startsWith(SIGNING_PREFIX)) {
+			email=email.substring(SIGNING_PREFIX.length());
+			
+			User user=userRepository.findByEmail(email);
+			
+			if(user==null) {
+				throw new Exception("user not exist with provided email");
+			}
+		}
+		
+		VerificationCode isExist = verificationCodeRepository.findByEmail(email);
+		
+		if(isExist!=null) {
+			verificationCodeRepository.delete(isExist);
+		}
+		
+		String otp=OtpUtil.generateOtp();
+		
+		VerificationCode verificationCode=new VerificationCode();
+		verificationCode.setOtp(otp);
+		verificationCode.setEmail(email);
+		verificationCodeRepository.save(verificationCode);
+		
+		String subject="Ecommerce login/signup otp"+otp;
+		String text="your login/signup otp is - ";
+		
+		emailService.sendVerificationOtpEmail(email, otp, subject, text);
+		
 	}
 
 }
