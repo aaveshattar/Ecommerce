@@ -48,8 +48,10 @@ else {
     if(role==null) role=USER_ROLE.ROLE_CUSTOMER;
     
     List<GrantedAuthority> authorityList=new ArrayList<>();
-    authorityList.add(new SimpleGrantedAuthority("ROLE_"+role) );
-		
+    authorityList.add(new SimpleGrantedAuthority(role.toString()));
+		System.out.println(email);
+		System.out.println(password);
+		System.out.println(role);
     return new org.springframework.security.core.userdetails.User(email,password,authorityList);
 	}
 	 
