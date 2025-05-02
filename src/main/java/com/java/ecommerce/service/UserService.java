@@ -4,7 +4,7 @@ import com.java.ecommerce.model.User;
 
 public interface UserService {
 
-     User findUserByJwtToken(String jwt);
+     User findUserByJwtToken(String jwt) throws Exception;
      
-     User findUserByEmail(String email);
+     User findUserByEmail(String email) throws Exception;
 }
